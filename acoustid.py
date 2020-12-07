@@ -125,8 +125,8 @@ def _compress(data):
     sio = BytesIO()
     with contextlib.closing(gzip.GzipFile(fileobj=sio, mode='wb')) as f:
         f.write(data)
-    return sio.getvalue()
-
+    # return sio.getvalue()
+    return data
 
 class CompressedHTTPAdapter(requests.adapters.HTTPAdapter):
     """An `HTTPAdapter` that compresses request bodies with gzip. The
@@ -137,7 +137,7 @@ class CompressedHTTPAdapter(requests.adapters.HTTPAdapter):
         if not isinstance(body, bytes):
             body = body.encode('utf8')
         request.prepare_body(_compress(body), None)
-        request.headers['Content-Encoding'] = 'gzip'
+        # request.headers['Content-Encoding'] = 'gzip'
 
 
 # Utilities.
